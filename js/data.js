@@ -1,6 +1,6 @@
 /* Seed data + localStorage helpers */
 (function () {
-  const STORAGE_KEY = "rawrenks_db_v1";
+  const STORAGE_KEY = "rawrenks_db_v2";
 
   const BRANDS = ["Northwind", "Marlow", "Kairo", "Velura", "Pacecraft", "Sundown", "Linenly", "Stoneside"];
   const CATEGORIES = ["Men", "Women", "Kids", "Accessories"];
@@ -118,18 +118,18 @@
     return [
       {
         id: "b1",
-        title: "Summer Collection 2026",
-        sub: "Lightweight pieces for warm days",
-        cta: "Shop Summer",
+        title: "summer, served warm",
+        sub: "Linen, soft tones, sundown vibes. Built for the season — wear it once, keep it forever.",
+        cta: "shop the drop",
         link: "#/shop?tag=Summer%20Collection",
         image: "https://picsum.photos/id/1015/1600/700",
         active: true
       },
       {
         id: "b2",
-        title: "Limited Edition Drops",
-        sub: "Premium picks, while they last",
-        cta: "Discover",
+        title: "limited edition, no restocks",
+        sub: "Once it's gone, it's gone. Premium picks that won't come back.",
+        cta: "see what's left",
         link: "#/shop?tag=Limited%20Edition",
         image: "https://picsum.photos/id/1074/1600/700",
         active: false

@@ -56,7 +56,7 @@
       <section class="hero">
         <img src="${banner.image}" alt=""/>
         <div class="hero-text">
-          <div class="eyebrow">New season</div>
+          <div class="eyebrow">the new drop ✦ summer '26</div>
           <h1>${escape(banner.title)}</h1>
           <p>${escape(banner.sub)}</p>
           <a class="btn-primary" href="${banner.link}">${escape(banner.cta)}</a>
@@ -64,21 +64,21 @@
       </section>
 
       <section class="section">
-        <div class="section-head"><h2>Shop by Category</h2></div>
+        <div class="section-head"><h2>shop by vibe</h2></div>
         <div class="cat-grid">
-          <a class="cat-tile" href="#/shop/Men"><img src="https://picsum.photos/id/1027/600/400"/><span>Men</span></a>
-          <a class="cat-tile" href="#/shop/Women"><img src="https://picsum.photos/id/1014/600/400"/><span>Women</span></a>
-          <a class="cat-tile" href="#/shop/Kids"><img src="https://picsum.photos/id/1043/600/400"/><span>Kids</span></a>
-          <a class="cat-tile" href="#/shop/Accessories"><img src="https://picsum.photos/id/1060/600/400"/><span>Accessories</span></a>
+          <a class="cat-tile" href="#/shop/Men"><img src="https://picsum.photos/id/1027/600/400"/><span>men</span></a>
+          <a class="cat-tile" href="#/shop/Women"><img src="https://picsum.photos/id/1014/600/400"/><span>women</span></a>
+          <a class="cat-tile" href="#/shop/Kids"><img src="https://picsum.photos/id/1043/600/400"/><span>kids</span></a>
+          <a class="cat-tile" href="#/shop/Accessories"><img src="https://picsum.photos/id/1060/600/400"/><span>accessories</span></a>
         </div>
       </section>
 
-      ${renderSection("Summer Collection", featured, "Lightweight pieces for the warm season")}
-      ${renderSection("New Arrivals", arrivals, "Fresh in this week")}
-      ${renderSection("Trending Now", trending, "Most loved by customers")}
-      ${renderSection("Best Sellers", bestSellers, "Year-round favourites")}
-      ${renderSection("Limited Edition", limited, "When they’re gone, they’re gone")}
-      ${renderSection("Discount Offers", discounted, "Save big on these picks")}
+      ${renderSection("Summer Collection", featured, "linen szn — soft tones, no rush")}
+      ${renderSection("Just Dropped", arrivals, "fresh from the studio this week")}
+      ${renderSection("Trending", trending, "what everyone's wearing rn")}
+      ${renderSection("Best Sellers", bestSellers, "the ones we can't keep in stock")}
+      ${renderSection("Limited Edition", limited, "no restocks — when it's gone, it's gone")}
+      ${renderSection("On Sale", discounted, "main-character pieces, marked down")}
     `;
   }
 
