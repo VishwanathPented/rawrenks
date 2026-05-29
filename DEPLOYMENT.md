@@ -306,4 +306,130 @@ No build step needed — Vercel serves the static files directly.
 
 ---
 
+## 3-Year Total Cost of Ownership (INR)
+
+All figures in ₹ INR, list prices as of May 2026. USD converted at ₹85/$.
+Domains assume first-year promo then standard renewal. Excludes payment-gateway
+fees (~2% of revenue — variable) and GST.
+
+### Tier A — Portfolio / Demo (free hosting + just a domain)
+
+| Component         | Provider              | Yr 1     | Yr 2     | Yr 3     | 3-Yr Total |
+|-------------------|-----------------------|----------|----------|----------|------------|
+| Frontend hosting  | Vercel / Cloudflare Pages free | ₹0       | ₹0       | ₹0       | ₹0         |
+| Database          | localStorage (browser)| ₹0       | ₹0       | ₹0       | ₹0         |
+| Domain `.com`     | Cloudflare Registrar  | ₹1,100   | ₹1,300   | ₹1,300   | **₹3,700** |
+| TLS / SSL         | Let's Encrypt (auto)  | ₹0       | ₹0       | ₹0       | ₹0         |
+| Email             | —                     | ₹0       | ₹0       | ₹0       | ₹0         |
+| **Total**         |                       | ₹1,100   | ₹1,300   | ₹1,300   | **₹3,700** |
+
+> Cheaper variant: `.in` domain → ₹600 + ₹800 + ₹800 = **₹2,200** over 3 years.
+
+### Tier B — MVP / First Customers (< 1,000 orders/mo)
+
+Stays on free tiers for most components. Upgrade DB to paid in Year 2 once you
+cross 500 MB or 50k auth users.
+
+| Component             | Provider             | Yr 1     | Yr 2      | Yr 3      | 3-Yr Total |
+|-----------------------|----------------------|----------|-----------|-----------|------------|
+| Frontend hosting      | Vercel Hobby (free)  | ₹0       | ₹0        | ₹0        | ₹0         |
+| Database + Auth       | Supabase Free → Pro  | ₹0       | ₹25,200   | ₹25,200   | ₹50,400    |
+| Image storage         | Cloudflare R2 free   | ₹0       | ₹0        | ₹0        | ₹0         |
+| Email (transactional) | Resend Free          | ₹0       | ₹0        | ₹0        | ₹0         |
+| Monitoring            | Sentry Free          | ₹0       | ₹0        | ₹0        | ₹0         |
+| Domain `.com`         | Cloudflare Registrar | ₹1,100   | ₹1,300    | ₹1,300    | ₹3,700     |
+| **Total fixed**       |                      | **₹1,100** | **₹26,500** | **₹26,500** | **₹54,100** |
+
+> All-free variant (stay on Supabase Free entire 3 yrs if usage permits): **₹3,700** total.
+> Plus Razorpay ~2% of revenue (variable, not fixed cost).
+
+### Tier C — Growth (1k–20k orders/mo)
+
+Paid plans across the board. The "lean" column uses Cloudflare Pages + Neon + Brevo
+to roughly halve the bill.
+
+| Component             | Provider               | Monthly  | Yr 1     | Yr 2     | Yr 3     | 3-Yr Total |
+|-----------------------|------------------------|----------|----------|----------|----------|------------|
+| Frontend hosting      | Vercel Pro ($20)       | ₹1,700   | ₹20,400  | ₹20,400  | ₹20,400  | ₹61,200    |
+| Database + Auth + Storage | Supabase Pro ($25) | ₹2,100   | ₹25,200  | ₹25,200  | ₹25,200  | ₹75,600    |
+| Email                 | Resend ($20 / 50k)     | ₹1,700   | ₹20,400  | ₹20,400  | ₹20,400  | ₹61,200    |
+| Image CDN             | Cloudflare R2          | ₹300     | ₹3,600   | ₹3,600   | ₹3,600   | ₹10,800    |
+| Monitoring            | Sentry Team ($26)      | ₹2,200   | ₹26,400  | ₹26,400  | ₹26,400  | ₹79,200    |
+| Uptime alerts         | UptimeRobot ($7)       | ₹600     | ₹7,200   | ₹7,200   | ₹7,200   | ₹21,600    |
+| Domain `.com`         | Cloudflare Registrar   | —        | ₹1,100   | ₹1,300   | ₹1,300   | ₹3,700     |
+| **Total fixed**       |                        | **~₹8,600** | **₹1,04,300** | **₹1,04,500** | **₹1,04,500** | **₹3,13,300** |
+
+**Lean growth alternative** (Cloudflare Pages Pro $5 + Neon $19 + Brevo ₹2,000):
+roughly **₹1,60,000 over 3 years**.
+
+### Tier D — Scale (50k+ orders/mo, regional traffic)
+
+Mid-range estimate — actual cost varies a lot with traffic shape.
+
+| Component                | Provider                          | Monthly       | 3-Yr Total      |
+|--------------------------|-----------------------------------|---------------|-----------------|
+| Frontend + edge          | Vercel Enterprise / AWS Amplify   | ₹15,000       | ₹5,40,000       |
+| Database                 | AWS RDS db.t3.medium (Postgres)   | ₹10,000       | ₹3,60,000       |
+| Object storage + CDN     | AWS S3 + CloudFront               | ₹4,000        | ₹1,44,000       |
+| Search                   | Algolia (10k recs, 100k searches) | ₹5,000        | ₹1,80,000       |
+| Email                    | AWS SES + Resend Pro              | ₹1,500        | ₹54,000         |
+| Monitoring + APM         | Sentry Business + Datadog basic   | ₹9,000        | ₹3,24,000       |
+| Redis cache / queue      | Upstash Redis pay-as-go           | ₹1,500        | ₹54,000         |
+| DDoS / WAF               | Cloudflare Pro                    | ₹1,700        | ₹61,200         |
+| Staging environment      | ~2× DB cost                       | ₹4,000        | ₹1,44,000       |
+| Domain `.com` + DNS      | Cloudflare                        | —             | ₹3,700          |
+| **Total fixed (infra)**  |                                   | **~₹51,700**  | **~₹18,64,900** |
+
+Plus people/ops you'll likely need at this scale (not infra, but real money):
+
+| Item                            | Monthly        | 3-Yr Total      |
+|---------------------------------|----------------|-----------------|
+| Part-time DevOps / SRE          | ₹25,000        | ₹9,00,000       |
+| GST filing (CA)                 | ₹1,000         | ₹36,000         |
+| Customer support tool (Tidio paid) | ₹1,500     | ₹54,000         |
+
+### Side-by-side summary (3-year totals)
+
+| Tier         | Best for                           | 3-Yr Fixed Cost (INR) |
+|--------------|------------------------------------|-----------------------|
+| **A. Portfolio** | Demo only, no real orders      | **₹3,700**            |
+| **B. MVP**       | First customers, < 1k orders/mo | **₹3,700 – ₹54,100**  |
+| **C. Growth**    | 1k–20k orders/mo                | **₹1,60,000 – ₹3,13,300** |
+| **D. Scale**     | 50k+ orders/mo                  | **₹18,00,000 – ₹30,00,000+** |
+
+### One-time costs (year 1 only)
+
+| Item                          | Cost          |
+|-------------------------------|---------------|
+| Logo + brand design (Fiverr / freelancer) | ₹2,000 – ₹15,000 |
+| Product photography kit (DIY) | ₹15,000       |
+| Legal review (terms, privacy, refunds) | ₹5,000 – ₹15,000 |
+| GST registration (CA-assisted) | ₹2,000       |
+| Trademark registration (optional) | ₹6,500 (govt) + ₹5,000 (agent) |
+
+### Variable costs (not in totals above)
+
+- **Razorpay**: 2% per transaction → ₹2,000 fee per ₹1,00,000 revenue
+- **Shipping**: ₹40–80 per order via Shiprocket/Delhivery
+- **Returns reserve**: budget 5–10% of revenue
+- **Bandwidth overage**: Vercel/Supabase Pro plans include generous limits; overages bill in $1–5 increments
+
+### Recommended starting budget
+
+For a real but small clothing store launching in 2026:
+
+```
+Year 1: ₹1,100 (domain) + ₹0 (free tiers) + ₹20,000 (one-time setup)  ≈ ₹21,000
+Year 2: ₹26,500 (domain renewal + Supabase Pro)                       ≈ ₹26,500
+Year 3: ₹26,500 (same as Yr 2)                                        ≈ ₹26,500
+─────────────────────────────────────────────────────────────────────────
+3-YEAR TOTAL                                                           ≈ ₹74,000
+```
+
+That gets you a real `.com` domain, a real Postgres database, real auth, real
+file storage, real monitoring, and real email — enough to run a small clothing
+brand. Scale only when revenue justifies it.
+
+---
+
 That's everything. Start free, swap components only as you outgrow them.

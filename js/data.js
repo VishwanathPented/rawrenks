@@ -1,9 +1,9 @@
 /* Seed data + localStorage helpers */
 (function () {
-  const STORAGE_KEY = "rawrenks_db_v2";
+  const STORAGE_KEY = "rawrenks_db_v3";
 
   const BRANDS = ["Northwind", "Marlow", "Kairo", "Velura", "Pacecraft", "Sundown", "Linenly", "Stoneside"];
-  const CATEGORIES = ["Men", "Women", "Kids", "Accessories"];
+  const CATEGORIES = ["Men", "Women", "Accessories"];
   const COLORS = [
     { name: "Black", hex: "#111111" },
     { name: "White", hex: "#f5f5f5" },
@@ -16,7 +16,6 @@
     { name: "Brown", hex: "#7b4b2a" }
   ];
   const SIZES = ["XS", "S", "M", "L", "XL", "XXL"];
-  const KID_SIZES = ["2-3Y", "4-5Y", "6-7Y", "8-9Y", "10-12Y"];
   const ACC_SIZES = ["One Size"];
 
   const productSeeds = [
@@ -37,11 +36,10 @@
     { name: "Silk Camisole", cat: "Women", brand: "Velura", img: 1041, base: 1899, off: 20, tag: "Limited Edition" },
     { name: "Wide-Leg Trousers", cat: "Women", brand: "Stoneside", img: 1042, base: 2499, off: 10, tag: "" },
     { name: "Cropped Denim Jacket", cat: "Women", brand: "Marlow", img: 1066, base: 2999, off: 25, tag: "Best Sellers" },
-
-    { name: "Kids Hooded Sweatshirt", cat: "Kids", brand: "Northwind", img: 1043, base: 999, off: 15, tag: "New Arrivals" },
-    { name: "Cartoon Print Tee Pack", cat: "Kids", brand: "Sundown", img: 1044, base: 799, off: 30, tag: "Best Sellers" },
-    { name: "Denim Dungarees", cat: "Kids", brand: "Marlow", img: 1050, base: 1499, off: 20, tag: "Trending" },
-    { name: "Pastel Tutu Dress", cat: "Kids", brand: "Sundown", img: 1052, base: 1299, off: 25, tag: "Summer Collection" },
+    { name: "Ribbed Bodysuit", cat: "Women", brand: "Velura", img: 1043, base: 1299, off: 20, tag: "New Arrivals" },
+    { name: "Linen Wide-Leg Pants", cat: "Women", brand: "Linenly", img: 1044, base: 2199, off: 15, tag: "Summer Collection" },
+    { name: "Satin Slip Dress", cat: "Women", brand: "Sundown", img: 1050, base: 2799, off: 25, tag: "Limited Edition" },
+    { name: "Oversized Blazer", cat: "Women", brand: "Stoneside", img: 1052, base: 3499, off: 30, tag: "Trending" },
 
     { name: "Leather Crossbody Bag", cat: "Accessories", brand: "Velura", img: 1060, base: 3499, off: 30, tag: "Best Sellers" },
     { name: "Aviator Sunglasses", cat: "Accessories", brand: "Kairo", img: 1067, base: 1499, off: 20, tag: "Trending" },
@@ -80,7 +78,7 @@
   function buildProducts() {
     return productSeeds.map((p, idx) => {
       const id = "p_" + (idx + 1).toString().padStart(3, "0");
-      const sizes = p.cat === "Kids" ? KID_SIZES.slice(0, 4) : p.cat === "Accessories" ? ACC_SIZES : SIZES.slice(1, 5);
+      const sizes = p.cat === "Accessories" ? ACC_SIZES : SIZES.slice(1, 5);
       const colorPool = COLORS.slice((idx * 2) % COLORS.length, ((idx * 2) % COLORS.length) + 3).map(c => c.name);
       const price = p.base;
       const discountPrice = p.off ? Math.round(price * (1 - p.off / 100)) : 0;
@@ -246,6 +244,6 @@
 
   window.RawDB = {
     load, save, reset,
-    COLORS, BRANDS, CATEGORIES, SIZES, KID_SIZES
+    COLORS, BRANDS, CATEGORIES, SIZES
   };
 })();

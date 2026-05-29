@@ -43,7 +43,7 @@
     if (m) m.classList.remove("open");
   }
 
-  function rerender() { Router.render(); }
+  function rerender() { Router.render(); afterRender(); }
 
   /* Cart helpers used by inline onclick handlers */
   function cartQty(productId, size, color, delta) {
@@ -172,10 +172,100 @@
     toast("Invoice downloaded");
   }
 
+  /* ============ 3D + SCROLL FX ============ */
+  function bindTilt() {
+    document.querySelectorAll(".tilt-grid .product-card, .tilt-card").forEach(card => {
+      if (card.dataset.tiltBound) return;
+      card.dataset.tiltBound = "1";
+      card.addEventListener("mousemove", (e) => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `perspective(900px) rotateX(${-y * 8}deg) rotateY(${x * 10}deg) translateY(-6px)`;
+        card.style.setProperty("--glare-x", (x * 100 + 50) + "%");
+        card.style.setProperty("--glare-y", (y * 100 + 50) + "%");
+      });
+      card.addEventListener("mouseleave", () => {
+        card.style.transform = "";
+      });
+    });
+  }
+
+  function bindReveal() {
+    const els = document.querySelectorAll(".reveal:not(.in)");
+    if (!("IntersectionObserver" in window)) {
+      els.forEach(el => el.classList.add("in"));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.classList.add("in");
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    els.forEach(el => io.observe(el));
+  }
+
+  function bindParallax() {
+    const tick = () => {
+      document.querySelectorAll("[data-parallax]").forEach(w => {
+        const img = w.querySelector("img");
+        if (!img) return;
+        const r = w.getBoundingClientRect();
+        const vh = window.innerHeight;
+        if (r.bottom < 0 || r.top > vh) return;
+        const progress = (r.top + r.height / 2 - vh / 2) / vh;
+        img.style.transform = `scale(1.12) translateY(${progress * -80}px)`;
+      });
+    };
+    if (!window.__parallaxBound) {
+      window.__parallaxBound = true;
+      window.addEventListener("scroll", tick, { passive: true });
+      window.addEventListener("resize", tick, { passive: true });
+    }
+    tick();
+  }
+
+  function bindCursor() {
+    const dot = document.querySelector(".cursor-dot");
+    const ring = document.querySelector(".cursor-ring");
+    if (!dot || !ring) return;
+    if (matchMedia("(hover: none)").matches) {
+      dot.style.display = "none"; ring.style.display = "none";
+      return;
+    }
+    let mx = -100, my = -100, rx = -100, ry = -100;
+    document.addEventListener("mousemove", (e) => { mx = e.clientX; my = e.clientY; });
+    const loop = () => {
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      dot.style.transform = `translate(${mx}px, ${my}px)`;
+      ring.style.transform = `translate(${rx}px, ${ry}px)`;
+      requestAnimationFrame(loop);
+    };
+    loop();
+    const grow = () => ring.classList.add("grow");
+    const shrink = () => ring.classList.remove("grow");
+    document.addEventListener("mouseover", (e) => {
+      if (e.target.closest("a, button, .chip, .swatch, .insta-tile")) grow();
+      else shrink();
+    });
+  }
+
+  function afterRender() {
+    bindTilt();
+    bindReveal();
+    bindParallax();
+  }
+
   function init() {
     bindSearchSuggest();
-    window.addEventListener("hashchange", Router.render);
+    bindCursor();
+    window.addEventListener("hashchange", () => { Router.render(); afterRender(); });
     Router.render();
+    afterRender();
   }
 
   window.App = {

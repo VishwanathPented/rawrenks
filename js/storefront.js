@@ -40,7 +40,7 @@
     const discounted = all.filter(p => p.discountPrice > 0).sort((a, b) => (b.price - b.discountPrice) - (a.price - a.discountPrice)).slice(0, 8);
 
     const renderSection = (title, items, sub) => items.length ? `
-      <section class="section">
+      <section class="section reveal">
         <div class="section-head">
           <div>
             <h2>${escape(title)}</h2>
@@ -48,37 +48,208 @@
           </div>
           <a href="#/shop" class="more muted">View all →</a>
         </div>
-        <div class="products-grid">${items.map(productCardHTML).join("")}</div>
+        <div class="products-grid tilt-grid">${items.map(productCardHTML).join("")}</div>
       </section>
     ` : "";
 
+    const lookProducts = (bestSellers.length ? bestSellers : trending).slice(0, 3);
+    const reviewSet = all.flatMap(p => (p.reviews || [])
+      .filter(r => r.approved && r.rating >= 4 && r.text && r.text.length > 30)
+      .map(r => ({ ...r, productName: p.name, productImg: p.images[0], productId: p.id }))
+    ).slice(0, 6);
+
     return `
-      <section class="hero">
-        <img src="${banner.image}" alt=""/>
+      <section class="hero hero-split">
         <div class="hero-text">
           <div class="eyebrow">the new drop ✦ summer '26</div>
           <h1>${escape(banner.title)}</h1>
           <p>${escape(banner.sub)}</p>
-          <a class="btn-primary" href="${banner.link}">${escape(banner.cta)}</a>
+          <div class="hero-ctas">
+            <a class="btn-primary" href="${banner.link}">${escape(banner.cta)}</a>
+            <a class="btn-secondary" href="#/shop/Women">shop women</a>
+          </div>
+          <div class="hero-meta">
+            <span>✦ free shipping ₹1999+</span>
+            <span>★ cash on delivery</span>
+            <span>✦ 7-day returns</span>
+          </div>
+        </div>
+        <div class="hero-img-wrap" data-parallax>
+          <img src="${banner.image}" alt=""/>
+          <div class="hero-coin" aria-hidden="true">
+            <div class="hero-coin-spin">
+              <div class="hero-coin-face hero-coin-front">drop<br/><b>01</b></div>
+              <div class="hero-coin-face hero-coin-back">live<br/><b>now</b></div>
+            </div>
+          </div>
+          <div class="hero-sticker">est.<br/><b>'26</b></div>
         </div>
       </section>
 
-      <section class="section">
-        <div class="section-head"><h2>shop by vibe</h2></div>
-        <div class="cat-grid">
-          <a class="cat-tile" href="#/shop/Men"><img src="https://picsum.photos/id/1027/600/400"/><span>men</span></a>
-          <a class="cat-tile" href="#/shop/Women"><img src="https://picsum.photos/id/1014/600/400"/><span>women</span></a>
-          <a class="cat-tile" href="#/shop/Kids"><img src="https://picsum.photos/id/1043/600/400"/><span>kids</span></a>
-          <a class="cat-tile" href="#/shop/Accessories"><img src="https://picsum.photos/id/1060/600/400"/><span>accessories</span></a>
+      <section class="trust-strip reveal">
+        <div class="trust-item"><div class="trust-ico">⌁</div><div><b>Free Shipping</b><span>On orders over ₹1999</span></div></div>
+        <div class="trust-item"><div class="trust-ico">↺</div><div><b>Easy Returns</b><span>7-day no-questions policy</span></div></div>
+        <div class="trust-item"><div class="trust-ico">✦</div><div><b>Premium Quality</b><span>Made &amp; loved in India</span></div></div>
+        <div class="trust-item"><div class="trust-ico">⚡</div><div><b>Secure Payments</b><span>UPI · Cards · COD</span></div></div>
+      </section>
+
+      <section class="section reveal">
+        <div class="section-head">
+          <div>
+            <h2>shop by vibe</h2>
+            <div class="muted">pick your mood — we'll dress it</div>
+          </div>
+        </div>
+        <div class="cat-grid cat-grid-3">
+          <a class="cat-tile" href="#/shop/Men"><img src="https://picsum.photos/id/1027/600/400" alt=""/><span>men</span></a>
+          <a class="cat-tile" href="#/shop/Women"><img src="https://picsum.photos/id/1014/600/400" alt=""/><span>women</span></a>
+          <a class="cat-tile" href="#/shop/Accessories"><img src="https://picsum.photos/id/1060/600/400" alt=""/><span>accessories</span></a>
+        </div>
+      </section>
+
+      ${renderSection("Just Dropped", arrivals, "fresh from the studio this week")}
+
+      <section class="edit-banner reveal">
+        <a class="edit-card tilt-card" href="#/shop/Women">
+          <img src="https://picsum.photos/id/1011/900/1100" alt=""/>
+          <div class="edit-overlay">
+            <div class="eyebrow">the women's edit</div>
+            <h3>off-duty,<br/>on-point.</h3>
+            <span class="edit-more">shop the edit →</span>
+          </div>
+        </a>
+        <a class="edit-card tilt-card" href="#/shop/Men">
+          <img src="https://picsum.photos/id/1005/900/1100" alt=""/>
+          <div class="edit-overlay">
+            <div class="eyebrow">the men's edit</div>
+            <h3>quiet luxury,<br/>loud comfort.</h3>
+            <span class="edit-more">shop the edit →</span>
+          </div>
+        </a>
+      </section>
+
+      <section class="big-marquee" aria-hidden="true">
+        <div class="big-marquee-track">
+          <span>new drop</span><i>✦</i>
+          <span>summer '26</span><i>★</i>
+          <span>made in india</span><i>✦</i>
+          <span>worn worldwide</span><i>★</i>
+          <span>new drop</span><i>✦</i>
+          <span>summer '26</span><i>★</i>
+          <span>made in india</span><i>✦</i>
+          <span>worn worldwide</span><i>★</i>
         </div>
       </section>
 
       ${renderSection("Summer Collection", featured, "linen szn — soft tones, no rush")}
-      ${renderSection("Just Dropped", arrivals, "fresh from the studio this week")}
+
+      ${lookProducts.length === 3 ? `
+        <section class="section look-section reveal">
+          <div class="section-head">
+            <div>
+              <h2>shop the look</h2>
+              <div class="muted">one fit, three pieces — styled by us</div>
+            </div>
+            <a href="#/shop" class="more muted">view all looks →</a>
+          </div>
+          <div class="look-grid">
+            <div class="look-hero">
+              <img src="https://picsum.photos/id/1025/800/1100" alt=""/>
+              <div class="look-tag">look 01 · the linen sunday</div>
+            </div>
+            <div class="look-products">
+              ${lookProducts.map((p, i) => `
+                <a class="look-row" href="#/product/${p.id}">
+                  <span class="look-num">0${i + 1}</span>
+                  <img src="${p.images[0]}" alt=""/>
+                  <div class="look-info">
+                    <div class="brand-line">${escape(p.brand)}</div>
+                    <div class="look-name">${escape(p.name)}</div>
+                    <div class="price">${fmt(Store.effectivePrice(p))}</div>
+                  </div>
+                  <span class="look-arrow">→</span>
+                </a>
+              `).join("")}
+              <a class="btn-primary" href="#/shop" style="margin-top:8px;text-align:center">shop the full look</a>
+            </div>
+          </div>
+        </section>
+      ` : ""}
+
       ${renderSection("Trending", trending, "what everyone's wearing rn")}
       ${renderSection("Best Sellers", bestSellers, "the ones we can't keep in stock")}
       ${renderSection("Limited Edition", limited, "no restocks — when it's gone, it's gone")}
       ${renderSection("On Sale", discounted, "main-character pieces, marked down")}
+
+      ${reviewSet.length ? `
+        <section class="section reviews-section reveal">
+          <div class="section-head">
+            <div>
+              <h2>loved by you</h2>
+              <div class="muted">★★★★★ — verified reviews, no filters</div>
+            </div>
+          </div>
+          <div class="review-grid">
+            ${reviewSet.map(r => `
+              <a class="review-card" href="#/product/${r.productId}">
+                <div class="stars">${"★★★★★".slice(0, r.rating)}<span style="color:var(--line)">${"★★★★★".slice(r.rating)}</span></div>
+                <p class="review-text">"${escape(r.text)}"</p>
+                <div class="review-foot">
+                  <img src="${r.productImg}" alt=""/>
+                  <div>
+                    <div class="review-author">${escape(r.author)}</div>
+                    <div class="muted small">on ${escape(r.productName)}</div>
+                  </div>
+                </div>
+              </a>
+            `).join("")}
+          </div>
+        </section>
+      ` : ""}
+
+      <section class="press-strip reveal">
+        <span>as seen in</span>
+        <b>Vogue India</b>
+        <span>✦</span>
+        <b>Elle</b>
+        <span>✦</span>
+        <b>GQ</b>
+        <span>✦</span>
+        <b>Cosmopolitan</b>
+        <span>✦</span>
+        <b>Grazia</b>
+      </section>
+
+      <section class="section insta-section reveal">
+        <div class="section-head">
+          <div>
+            <h2>on the 'gram</h2>
+            <div class="muted">tag <b>@rawrenks</b> for a chance to be featured</div>
+          </div>
+          <a href="#" class="more muted" onclick="event.preventDefault();App.toast('follow @rawrenks ✦')">@rawrenks →</a>
+        </div>
+        <div class="insta-grid">
+          ${[1015, 1016, 1018, 1020, 1024, 1035].map(id => `
+            <a class="insta-tile" href="#" onclick="event.preventDefault();App.toast('opens instagram ✦')">
+              <img src="https://picsum.photos/id/${id}/400/400" alt=""/>
+              <span class="insta-heart">♥</span>
+            </a>
+          `).join("")}
+        </div>
+      </section>
+
+      <section class="newsletter reveal">
+        <div class="newsletter-inner">
+          <div class="eyebrow">join the club ✦</div>
+          <h2>get 10% off your first fit.</h2>
+          <p>drop your email — new collections, secret sales, no spam.</p>
+          <form class="newsletter-form" onsubmit="event.preventDefault();App.toast('welcome to the club ✦ check your inbox');this.reset()">
+            <input type="email" placeholder="your@email.com" required/>
+            <button class="btn-primary" type="submit">sign me up</button>
+          </form>
+          <p class="muted small" style="margin-top:14px">by signing up you agree to receive marketing emails. unsubscribe anytime.</p>
+        </div>
+      </section>
     `;
   }
 
