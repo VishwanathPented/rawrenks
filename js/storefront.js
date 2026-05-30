@@ -58,32 +58,76 @@
       .map(r => ({ ...r, productName: p.name, productImg: p.images[0], productId: p.id }))
     ).slice(0, 6);
 
+    const kinetic = (txt) => {
+      let i = 0;
+      return String(txt).split("").map(ch => {
+        if (ch === " ") return `<span class="kx kx-sp">&nbsp;</span>`;
+        const n = i++;
+        return `<span class="kx" style="animation-delay:${0.35 + n * 0.04}s">${escape(ch)}</span>`;
+      }).join("");
+    };
+
+    const photoIds = [1011, 1014, 1025];
+    const polaroidImg = photoIds[0];
+
     return `
-      <section class="hero hero-split">
+      <section class="hero hero-cinematic">
+        <div class="hero-mesh" aria-hidden="true"></div>
+        <div class="hero-particles" aria-hidden="true">
+          ${["✦","★","✦","★","✦","✧","★","✦"].map((s,i) => `<span style="--x:${(i+1)*12}%;--d:${i*1.4}s;--dur:${10 + i % 4 * 2}s">${s}</span>`).join("")}
+        </div>
+
         <div class="hero-text">
-          <div class="eyebrow">the new drop ✦ summer '26</div>
-          <h1>${escape(banner.title)}</h1>
-          <p>${escape(banner.sub)}</p>
+          <div class="eyebrow">the new drop ✦ summer '26 · live now</div>
+          <h1 class="kinetic">${kinetic(banner.title)}</h1>
+          <p class="hero-sub">${escape(banner.sub)}</p>
           <div class="hero-ctas">
-            <a class="btn-primary" href="${banner.link}">${escape(banner.cta)}</a>
+            <a class="btn-primary btn-magnet" href="${banner.link}">${escape(banner.cta)}</a>
             <a class="btn-secondary" href="#/shop/Women">shop women</a>
           </div>
-          <div class="hero-meta">
-            <span>✦ free shipping ₹1999+</span>
-            <span>★ cash on delivery</span>
-            <span>✦ 7-day returns</span>
+
+          <div class="hero-stats">
+            <div class="stat"><b class="counter" data-count="12420">0</b><span>fits shipped</span></div>
+            <div class="stat-div">✦</div>
+            <div class="stat"><b class="counter" data-count="49" data-decimal="1">0</b><span>★ avg rating</span></div>
+            <div class="stat-div">✦</div>
+            <div class="stat"><b class="counter" data-count="58" data-suffix="k">0</b><span>followers</span></div>
           </div>
         </div>
-        <div class="hero-img-wrap" data-parallax>
-          <img src="${banner.image}" alt=""/>
-          <div class="hero-coin" aria-hidden="true">
-            <div class="hero-coin-spin">
-              <div class="hero-coin-face hero-coin-front">drop<br/><b>01</b></div>
-              <div class="hero-coin-face hero-coin-back">live<br/><b>now</b></div>
-            </div>
+
+        <div class="hero-stage" data-collage>
+          <div class="orbit-badge" aria-hidden="true">
+            <svg viewBox="0 0 200 200">
+              <defs>
+                <path id="orbitPath" d="M 100 100 m -78 0 a 78 78 0 1 1 156 0 a 78 78 0 1 1 -156 0"/>
+              </defs>
+              <text>
+                <textPath href="#orbitPath" startOffset="0">the drop is live ✦ summer '26 ✦ the drop is live ✦ summer '26 ✦ </textPath>
+              </text>
+            </svg>
+            <span class="orbit-core">✦</span>
           </div>
+
+          <div class="polaroid p1" data-depth="0.025">
+            <img src="https://picsum.photos/id/${photoIds[0]}/600/780" alt=""/>
+            <span class="polaroid-tag">linen szn</span>
+          </div>
+          <div class="polaroid p2" data-depth="0.04">
+            <img src="https://picsum.photos/id/${photoIds[1]}/600/780" alt=""/>
+            <span class="polaroid-tag">denim, done right</span>
+          </div>
+          <div class="polaroid p3" data-depth="0.018">
+            <img src="https://picsum.photos/id/${photoIds[2]}/600/780" alt=""/>
+            <span class="polaroid-tag">off-duty</span>
+          </div>
+
           <div class="hero-sticker">est.<br/><b>'26</b></div>
         </div>
+
+        <a href="#/shop" class="scroll-cue" aria-label="Scroll">
+          <span>scroll to explore</span>
+          <span class="cue-arrow">↓</span>
+        </a>
       </section>
 
       <section class="trust-strip reveal">

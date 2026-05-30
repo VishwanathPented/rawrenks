@@ -6,3 +6,6 @@ Thumbs.db
 node_modules/
 .env
 .env.local
+
+# Reference repo — kept locally for study, not part of Rawrenks
+Nandan-Foods-main-main/
